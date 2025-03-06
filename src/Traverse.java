@@ -28,6 +28,59 @@ public class Traverse {
     v45.neighbors = new ArrayList<>(List.of(v23));
     v23.neighbors = new ArrayList<>(List.of());
     v67.neighbors = new ArrayList<>(List.of(v91));
+    // "List of" is immutable, but ArrayList is mutable - this is important!
+
+    // Vertex<Integer> v1 = new Vertex<>(1);
+    // System.out.println(v1.neighbors);
+
+    dfs(v7);
+    System.out.println();
+    dfs(v34);
+
+    Vertex<String> hello = new Vertex<>("Hello");
+    Vertex<String> world = new Vertex<>("world");
+    Vertex<String> exclaim = new Vertex<>("!");
+    Vertex<String> comma = new Vertex<>(",");
+    Vertex<String> how = new Vertex<>("how");
+    Vertex<String> are = new Vertex<>("are");
+    Vertex<String> you = new Vertex<>("you");
+    Vertex<String> the = new Vertex<>("the");
+    Vertex<String> cats = new Vertex<>("cats");
+    Vertex<String> question = new Vertex<>("?");
+
+    hello.neighbors = new ArrayList<>(List.of(comma, world, how));
+    world.neighbors = new ArrayList<>(List.of(exclaim));
+    exclaim.neighbors = new ArrayList<>(List.of(hello));
+    comma.neighbors = new ArrayList<>(List.of(world, how));
+    how.neighbors = new ArrayList<>(List.of(are));
+    are.neighbors = new ArrayList<>(List.of(you, the));
+    you.neighbors = new ArrayList<>(List.of(question));
+    the.neighbors = new ArrayList<>(List.of(cats));
+    cats.neighbors = new ArrayList<>(List.of(question));
+    question.neighbors = new ArrayList<>(List.of(question));
+
+    // dfs(comma);
+    
+  }
+
+  // node = vertex = node - they are the same thing!
+  public static <T> void dfs(Vertex<T> vertex) {
+    dfs(vertex, new HashSet<Vertex<T>>());
+  }
+
+  private static <T> void dfs(Vertex<T> vertex, Set<Vertex<T>> visited) {
+    if (vertex == null) return;
+    if (visited.contains(vertex)) return;
+    
+    visited.add(vertex);
+    System.out.println(vertex.data);
+    
+    if (vertex.neighbors == null) return;
+
+    for (var neighbor: vertex.neighbors) {
+      dfs(neighbor, visited);
+    }
+
   }
 
 }
